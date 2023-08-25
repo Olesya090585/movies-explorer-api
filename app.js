@@ -16,7 +16,7 @@ const app = express();
 app.use(helmet());
 app.use(limiter);
 app.use(express.json());
-app.use(cors({ origin: ['http://localhost:3001', 'https://mesto.ovarnakova.nomoreparties.co'] }));
+app.use(cors({ origin: ['http://localhost:3001'] }));
 mongoose.connect(DB_URL, {
   useNewUrlParser: true,
 });
