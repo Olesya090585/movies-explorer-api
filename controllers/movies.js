@@ -5,7 +5,7 @@ const BadRequestError = require('../errors/bad-request-err');
 const ForbiddenError = require('../errors/forbidden-err');
 
 module.exports.getMovies = (req, res, next) => {
-  Movies.find({})
+  Movies.find({ owner: req.user._id })
     .then((movies) => res.status(OK).send(movies))
     .catch((err) => {
       if (err.name === 'CastError') {

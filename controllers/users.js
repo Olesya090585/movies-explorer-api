@@ -38,7 +38,7 @@ module.exports.updateUser = (req, res, next) => {
     { name, email },
     { new: true, runValidators: true },
   )
-    .orFail()
+    .orFail(new NotFoundError('Пользователь с указанным _id не найден.'))
     .then((user) => res.status(OK).send(user))
     .catch((err) => {
       if (err.name === 'CastError' || err.name === 'ValidationError') {
@@ -56,6 +56,7 @@ module.exports.updateUser = (req, res, next) => {
       return next(err);
     });
 };
+
 module.exports.createUser = (req, res, next) => {
   bcrypt
     .hash(req.body.password, 10)

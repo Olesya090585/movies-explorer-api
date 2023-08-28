@@ -4,7 +4,7 @@ const { urlPattern } = require('../utils/constans');
 // валидация полей users
 module.exports.validateCreateUser = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
+    name: Joi.string().required().min(2).max(30),
     email: Joi.string().required().email(),
     password: Joi.string().required().min(8),
   }),
@@ -19,8 +19,8 @@ module.exports.validateLoginUser = celebrate({
 
 module.exports.validateUpdateUser = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    email: Joi.string().min(2).max(30),
+    name: Joi.string().required().min(2).max(30),
+    email: Joi.string().required().email(),
   }),
 });
 
