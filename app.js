@@ -16,7 +16,7 @@ const app = express();
 app.use(helmet());
 app.use(limiter);
 app.use(express.json());
-app.use(cors({ origin: ['http://localhost:3001'] }));
+app.use(cors({ origin: ['https://movies.ovarnakova.nomoredomainsicu.ru'] }));
 mongoose.connect(DB_URL, {
   useNewUrlParser: true,
 });
