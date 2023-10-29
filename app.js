@@ -4,19 +4,20 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
-const limiter = require('./middlewares/rateLimit');
+// const limiter = require('./middlewares/rateLimit');
 const { routes } = require('./routes');
 const errorsHandler = require('./middlewares/errorsHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 // Слушаем 3000 порт
 const { PORT, DB_URL } = process.env;
+console.log(PORT);
 
 const app = express();
 app.use(helmet());
-app.use(limiter);
+// app.use(limiter);
 app.use(express.json());
-app.use(cors({ origin: ['https://movies.ovarnakova.nomoredomainsicu.ru'] }));
+app.use(cors({ origin: 'https://movies.ovarnakova.nomoredomainsicu.ru' }));
 mongoose.connect(DB_URL, {
   useNewUrlParser: true,
 });

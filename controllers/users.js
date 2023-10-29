@@ -41,6 +41,9 @@ module.exports.updateUser = (req, res, next) => {
     .orFail(new NotFoundError('Пользователь с указанным _id не найден.'))
     .then((user) => res.status(OK).send(user))
     .catch((err) => {
+      if (err.code === 11000) {
+        return next(new ConflictError('Такой пользователь уже существует'));
+      }
       if (err.name === 'CastError' || err.name === 'ValidationError') {
         return next(
           new BadRequestError(
@@ -48,10 +51,8 @@ module.exports.updateUser = (req, res, next) => {
           ),
         );
       }
-      if (err.name === 'DocumentNotFoundError') {
-        return next(
-          new NotFoundError('Пользователь с указанным _id не найден.'),
-        );
+      if (err.code === 11000) {
+        return next(new ConflictError('Такой пользователь уже существует'));
       }
       return next(err);
     });
@@ -66,7 +67,9 @@ module.exports.createUser = (req, res, next) => {
       password: hash,
     }))
     .then((user) => res.status(CREATE).send({
-      _id: user._id, email: user.email, name: user.name,
+      _id: user._id,
+      email: user.email,
+      name: user.name,
     }))
     .catch((err) => {
       if (err.code === 11000) {
